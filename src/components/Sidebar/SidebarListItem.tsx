@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import { useLocation } from "react-router";
+
 import ArrowUpIcon from "../../assets/arrow-up-icon.svg";
 import ArrowDownIcon from "../../assets/arrow-down-icon.svg";
 
@@ -13,12 +15,23 @@ interface SidebarListItemProps {
   subItems: ISidebarItem[];
 }
 
+const checkActiveSubItems = (
+  subItems: ISidebarItem[],
+  path: string,
+): boolean => {
+  return subItems.some((subItem) => subItem.path === path);
+};
+
 const SidebarListItem: React.FC<SidebarListItemProps> = ({
   name,
   icon,
   subItems,
 }) => {
-  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const location = useLocation();
+
+  const [isExpanded, setIsExpanded] = useState<boolean>(
+    checkActiveSubItems(subItems, location.pathname),
+  );
 
   const arrowIcon = isExpanded === true ? ArrowDownIcon : ArrowUpIcon;
 
