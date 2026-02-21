@@ -31,7 +31,7 @@ const ACCESS_CONTROL_SUBITEMS: ISidebarItem[] = [USERS_ITEM];
 
 const Sidebar: React.FC = () => {
   return (
-    <nav className="flex flex-col justify-between w-84 h-full bg-[#0D1931] p-4 ">
+    <nav className="flex flex-col justify-between w-84 h-screen bg-[#0D1931] p-4 ">
       <div className="flex flex-col">
         <div className="flex m-6 mb-11">
           <img src={Logo} alt="Logo" />
