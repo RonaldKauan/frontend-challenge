@@ -31,19 +31,27 @@ const ACCESS_CONTROL_SUBITEMS: ISidebarItem[] = [USERS_ITEM];
 
 const Sidebar: React.FC = () => {
   return (
-    <nav className="w-84 h-full bg-[#0D1931] p-4 ">
-      <div className="flex m-6 mb-11">
-        <img src={Logo} alt="Logo" />
+    <nav className="flex flex-col justify-between w-84 h-full bg-[#0D1931] p-4 ">
+      <div className="flex flex-col">
+        <div className="flex m-6 mb-11">
+          <img src={Logo} alt="Logo" />
+        </div>
+
+        <div className="flex flex-col gap-1.5">
+          <SidebarItem item={HOME_ITEM} />
+
+          <SidebarListItem
+            name="Controle de Acesso"
+            icon={AccessControlIcon}
+            subItems={ACCESS_CONTROL_SUBITEMS}
+          />
+        </div>
       </div>
 
-      <div className="flex flex-col gap-1.5">
-        <SidebarItem item={HOME_ITEM} />
-
-        <SidebarListItem
-          name="Controle de Acesso"
-          icon={AccessControlIcon}
-          subItems={ACCESS_CONTROL_SUBITEMS}
-        />
+      <div className="ml-5 justify-self-end">
+        <span className="text-white font-bold">© WenLock</span>
+        <p className="text-xs text-[#AACBC4]">Power by Conecthus</p>
+        <p className="text-xs text-[#AACBC4]">V 0.0.0</p>
       </div>
     </nav>
   );
