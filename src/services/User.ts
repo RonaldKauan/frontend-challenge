@@ -53,3 +53,11 @@ export const findUser = (id: number) => {
 
   return filteredUser;
 };
+
+export const deleteUser = (id: number) => {
+  const users = getUsers();
+
+  const filteredUser = users.filter((user) => user.id !== id);
+
+  localStorage.setItem("users", JSON.stringify(filteredUser));
+};

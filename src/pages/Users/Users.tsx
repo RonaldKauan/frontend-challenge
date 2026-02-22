@@ -10,14 +10,21 @@ import Table from "../../components/ui/Table/Table";
 import PlusIcon from "../../assets/plus-icon.svg";
 import DisabledPlusIcon from "../../assets/disabled-plus-icon.svg";
 
-import { getUsers } from "../../services/User";
+import { deleteUser, getUsers } from "../../services/User";
 
 import type { IUser } from "../../types/User";
+import DeleteUserModal from "../../components/DeleteUserModal/DeleteUserModal";
 
 const Users: React.FC = () => {
-  const [users] = useState<IUser[]>(getUsers());
+  const [users, setUsers] = useState<IUser[]>(getUsers());
 
   const [search, setSearch] = useState<string>("");
+
+  const [userDeleteModal, setUserDeleteModal] = useState({
+    isOpen: false,
+    primaryAction: () => {},
+    secondaryAction: () => {},
+  });
 
   const showTable = users.length > 0;
 
@@ -25,6 +32,28 @@ const Users: React.FC = () => {
 
   const handleSearch = (newValue: string) => {
     setSearch(newValue);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setUserDeleteModal({
+      isOpen: false,
+      primaryAction: () => {},
+      secondaryAction: () => {},
+    });
+  };
+
+  const handleDeleteUser = (userId: number) => {
+    setUserDeleteModal({
+      isOpen: true,
+      primaryAction: () => {
+        deleteUser(userId);
+        setUsers(getUsers());
+        handleCloseDeleteModal();
+      },
+      secondaryAction: () => {
+        handleCloseDeleteModal();
+      },
+    });
   };
 
   return (
@@ -52,6 +81,7 @@ const Users: React.FC = () => {
               { name: "Ações", width: "15%" },
             ]}
             rows={users}
+            handleDeleteUser={handleDeleteUser}
           />
         </div>
       ) : (
@@ -66,6 +96,8 @@ const Users: React.FC = () => {
       )}
 
       <TablePagination currentPage={1} itemsByPage={15} totalItems={250} />
+
+      <DeleteUserModal {...userDeleteModal} />
     </div>
   );
 };

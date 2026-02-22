@@ -16,9 +16,10 @@ interface TableColumn {
 interface TableProps {
   columns: TableColumn[];
   rows: IUser[];
+  handleDeleteUser: (userId: number) => void;
 }
 
-const Table: React.FC<TableProps> = ({ columns, rows }) => {
+const Table: React.FC<TableProps> = ({ columns, rows, handleDeleteUser }) => {
   return (
     <table className={styled.table}>
       <thead>
@@ -43,7 +44,10 @@ const Table: React.FC<TableProps> = ({ columns, rows }) => {
                   <EditIcon />
                 </button>
               </Link>
-              <button className={styled.button}>
+              <button
+                className={styled.button}
+                onClick={() => handleDeleteUser(row.id)}
+              >
                 <DeleteIcon />
               </button>
             </td>
