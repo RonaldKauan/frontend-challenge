@@ -45,8 +45,8 @@ const Users: React.FC = () => {
         <div className="h-[70%] w-full">
           <Table
             columns={[
-              { name: "Nome", width: "80%" },
-              { name: "Ações", width: "20%" },
+              { name: "Nome", width: "85%" },
+              { name: "Ações", width: "15%" },
             ]}
             rows={users}
           />
