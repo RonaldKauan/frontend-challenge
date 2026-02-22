@@ -1,0 +1,35 @@
+.baseButton {
+  display: flex;
+  align-items: center;
+
+  border-radius: 0.5rem;
+  padding: 1rem 3rem;
+
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.primaryButton {
+  background-color: #0290a4;
+  color: #ffffff;
+}
+
+.primaryButton:hover {
+  background-color: #00606d;
+}
+
+.secondaryButton {
+  background-color: #ffffff;
+  color: #0b2b25;
+  border: 1px solid #0b2b25;
+}
+
+.secondaryButton:hover {
+  background-color: #00606d40;
+}
+
+.primaryButton:disabled,
+.secondaryButton:disabled {
+  background-color: #e2e2e2;
+  color: #6f7d7d;
+}

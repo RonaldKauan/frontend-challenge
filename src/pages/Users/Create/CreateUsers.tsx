@@ -11,9 +11,9 @@ import {
 
 import BackIcon from "../../../assets/back-icon.svg";
 
-import Button from "../../../components/ui/Button/Button";
 import FormInput from "../../../components/ui/Form/FormInput/FormInput";
 import FormSection from "../../../components/ui/Form/FormSection/FormSection";
+import FormButton from "../../../components/ui/Form/FormButton/FormButton";
 
 import Breadcrumb, {
   type BreadcrumbItem,
@@ -78,7 +78,7 @@ const CreateUsers: React.FC = () => {
               placeholder="Insira o Nº da matrícula"
               label="Matrícula"
               errorMessage={formState.errors?.matricula?.message ?? ""}
-              helperText="Mín. 4 Letras | • Máx. 10 Caracteres"
+              helperText="Mín. 4 Dígitos | • Máx. 10 Dígitos"
               currentValue={matricula}
               {...register("matricula")}
             />
@@ -116,12 +116,16 @@ const CreateUsers: React.FC = () => {
             />
           </div>
         </div>
-        <div className="flex justify-end gap-2.5 m-">
-          <Button>Cancelar</Button>
+        <div className="flex justify-end gap-2.5 mt-20">
+          <FormButton mode="secondary">Cancelar</FormButton>
 
-          <Button type="submit" disabled={isFormValid === false}>
+          <FormButton
+            mode="primary"
+            type="submit"
+            disabled={isFormValid === false}
+          >
             Cadastrar
-          </Button>
+          </FormButton>
         </div>
       </form>
     </div>
