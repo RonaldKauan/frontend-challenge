@@ -9,6 +9,7 @@ import DisabledPlusIcon from "../../assets/disabled-plus-icon.svg";
 
 import type { IUser } from "../../types/User";
 import Table from "../../components/ui/Table/Table";
+import { Link } from "react-router";
 
 const Users: React.FC = () => {
   const [users] = useState<IUser[]>([
@@ -33,10 +34,12 @@ const Users: React.FC = () => {
       <div className="flex justify-between">
         <Search value={search} handleValue={handleSearch} />
 
-        <Button disabled={disabledButton}>
-          {disabledButton ? <DisabledPlusIcon /> : <PlusIcon />}
-          Cadastrar Usuário
-        </Button>
+        <Link to="create">
+          <Button disabled={disabledButton}>
+            {disabledButton ? <DisabledPlusIcon /> : <PlusIcon />}
+            Cadastrar Usuário
+          </Button>
+        </Link>
       </div>
 
       {showTable}

@@ -7,6 +7,7 @@ import "./index.css";
 import Root from "./Root";
 import Home from "./pages/Home/Home";
 import Users from "./pages/Users/Users";
+import CreateUsers from "./pages/Users/Create/CreateUsers";
 
 const router = createBrowserRouter([
   {
@@ -14,7 +15,13 @@ const router = createBrowserRouter([
     Component: Root,
     children: [
       { index: true, Component: Home },
-      { path: "users", Component: Users },
+      {
+        path: "users",
+        children: [
+          { index: true, Component: Users },
+          { path: "create", Component: CreateUsers },
+        ],
+      },
     ],
   },
 ]);
