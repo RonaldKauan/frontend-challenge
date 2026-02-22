@@ -12,7 +12,10 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ item, isSubItem }) => {
 
   const location = useLocation();
 
-  const isSelected = location.pathname === path;
+  const isSelected =
+    path === "/"
+      ? location.pathname === path
+      : location.pathname.includes(path);
 
   const currentIcon = isSelected ? activeIcon : normalIcon;
 
@@ -22,6 +25,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ item, isSubItem }) => {
       className={`flex items-center gap-2.5 ${isSubItem ? "px-3 py-1.5" : "p-4"} rounded-md ${isSelected ? "bg-[#00AAC1]" : "hover:bg-[#00606D]"}`}
     >
       {currentIcon}
+
       <p
         className={
           isSelected

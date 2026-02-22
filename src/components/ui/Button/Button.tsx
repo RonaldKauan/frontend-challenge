@@ -1,17 +1,16 @@
-import type { PropsWithChildren } from "react";
+import type { ButtonHTMLAttributes, PropsWithChildren } from "react";
 
 import styled from "./Button.module.css";
 
-interface ButtonProps {
-  disabled?: boolean;
-}
+// interface ButtonProps {
+//   disabled?: boolean;
+// }
 
-const Button: React.FC<PropsWithChildren<ButtonProps>> = ({
-  disabled,
-  children,
-}) => {
+const Button: React.FC<
+  PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>>
+> = ({ children, ...props }) => {
   return (
-    <button disabled={disabled} className={styled.button}>
+    <button className={styled.button} {...props}>
       {children}
     </button>
   );

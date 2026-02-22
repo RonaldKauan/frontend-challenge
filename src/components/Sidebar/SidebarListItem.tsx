@@ -19,7 +19,7 @@ const checkActiveSubItems = (
   subItems: ISidebarItem[],
   path: string,
 ): boolean => {
-  return subItems.some((subItem) => subItem.path === path);
+  return subItems.some((subItem) => path.includes(subItem.path));
 };
 
 const SidebarListItem: React.FC<SidebarListItemProps> = ({
