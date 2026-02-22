@@ -1,0 +1,23 @@
+.button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  background-color: #0290a4;
+  color: #ffffff;
+
+  border-radius: 0.5rem;
+  padding: 1rem;
+
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.button:hover {
+  background-color: #00606d;
+}
+
+.button:disabled {
+  background-color: #e2e2e2;
+  color: #6f7d7d;
+}
