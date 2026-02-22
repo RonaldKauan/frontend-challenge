@@ -23,7 +23,7 @@
   border-radius: 0 6px 6px 0;
 }
 
-.table tbody:before {
+.table thead::after {
   content: "-";
   display: block;
   line-height: 1em;
@@ -32,6 +32,7 @@
 
 .table tbody {
   margin-top: 12px;
+  box-shadow: 0px 1px 4px #00000029;
 }
 
 .table tbody tr {
@@ -43,4 +44,20 @@
 .table tbody tr td {
   background-color: white;
   padding: 1rem;
+}
+
+.table tbody tr:first-child td:first-child {
+  border-radius: 5px 0 0 0;
+}
+
+.table tbody tr:first-child td:last-child {
+  border-radius: 0 5px 0 0;
+}
+
+.table tbody tr:last-child td:first-child {
+  border-radius: 0 0 0 5px;
+}
+
+.table tbody tr:last-child td:last-child {
+  border-radius: 0 0 5px 0;
 }
