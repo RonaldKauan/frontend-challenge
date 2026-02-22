@@ -1,6 +1,9 @@
-import { type InputHTMLAttributes } from "react";
+import { useState, type InputHTMLAttributes } from "react";
 
 import styled from "./FormInput.module.css";
+
+import ViewPassIcon from "../../../../assets/view-pass-icon.svg";
+import HidePassIcon from "../../../../assets/hide-pass-icon.svg";
 
 const borderStyle = (isFilled: boolean, error: string) => {
   if (error) {
@@ -12,6 +15,21 @@ const borderStyle = (isFilled: boolean, error: string) => {
   }
 
   return "";
+};
+
+const getInputType = (
+  type: React.HTMLInputTypeAttribute = "text",
+  showPassword: boolean,
+): React.HTMLInputTypeAttribute => {
+  if (type !== "password") {
+    return type;
+  }
+
+  if (showPassword) {
+    return "text";
+  }
+
+  return "password";
 };
 
 interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -28,7 +46,21 @@ const FormInput: React.FC<FormInputProps> = ({
   currentValue = "",
   ...props
 }) => {
+  const { type } = props;
+
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+
   const isFilled = currentValue.length > 0;
+
+  const inputType = getInputType(type, showPassword);
+
+  const togglePassword = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    e.preventDefault();
+
+    setShowPassword(!showPassword);
+  };
 
   return (
     <div className={styled.container}>
@@ -41,7 +73,15 @@ const FormInput: React.FC<FormInputProps> = ({
           </label>
         )}
 
-        <input className={styled.input} {...props} />
+        <div className="flex justify-between">
+          <input {...props} className={styled.input} type={inputType} />
+
+          {type === "password" && (
+            <button onClick={(e) => togglePassword(e)}>
+              {showPassword ? <HidePassIcon /> : <ViewPassIcon />}
+            </button>
+          )}
+        </div>
       </div>
 
       <div

@@ -25,6 +25,8 @@
   font-size: 18px;
   font-weight: 400;
   color: #0b2b25;
+
+  width: 100%;
 }
 
 .input::placeholder {

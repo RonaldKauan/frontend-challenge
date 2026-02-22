@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 
+import { Link } from "react-router";
+
 import { useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -53,7 +55,9 @@ const CreateUsers: React.FC = () => {
       <Breadcrumb items={CREATE_USERS_BREADCRUMB_ITEMS} />
 
       <div className="flex items-center gap-2">
-        <BackIcon />
+        <Link to="/">
+          <BackIcon />
+        </Link>
         <h1 className="text-[2.375rem] font-bold">Cadastro de Usuário</h1>
       </div>
 
