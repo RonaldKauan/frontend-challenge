@@ -1,21 +1,21 @@
 import React, { useState } from "react";
 
+import { Link } from "react-router";
+
 import TablePagination from "../../components/ui/Table/TablePagination/TablePagination";
 import Search from "../../components/ui/Search/Search";
 import Button from "../../components/ui/Button/Button";
+import Table from "../../components/ui/Table/Table";
 
 import PlusIcon from "../../assets/plus-icon.svg";
 import DisabledPlusIcon from "../../assets/disabled-plus-icon.svg";
 
+import { getUsers } from "../../services/User";
+
 import type { IUser } from "../../types/User";
-import Table from "../../components/ui/Table/Table";
-import { Link } from "react-router";
 
 const Users: React.FC = () => {
-  const [users] = useState<IUser[]>([
-    { name: "Raimundo Neto Abreu Teixeira" },
-    { name: "Ronald Kauan da Mota Paz" },
-  ]);
+  const [users] = useState<IUser[]>(getUsers());
 
   const [search, setSearch] = useState<string>("");
 

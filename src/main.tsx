@@ -14,12 +14,13 @@ const router = createBrowserRouter([
     path: "/",
     Component: Root,
     children: [
-      { index: true, Component: Home },
+      { index: true, element: <Home /> },
       {
         path: "users",
         children: [
           { index: true, Component: Users },
-          { path: "create", Component: CreateUsers },
+          { path: "create", element: <CreateUsers isEditing={false} /> },
+          { path: ":id/edit", element: <CreateUsers isEditing={true} /> },
         ],
       },
     ],
@@ -28,6 +29,6 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <RouterProvider router={router} />,
   </StrictMode>,
 );

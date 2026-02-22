@@ -1,5 +1,7 @@
 import type { IUser } from "../../../types/User";
 
+import { Link } from "react-router";
+
 import styled from "./Table.module.css";
 
 import ViewIcon from "../../../assets/view-icon.svg";
@@ -30,15 +32,17 @@ const Table: React.FC<TableProps> = ({ columns, rows }) => {
       </thead>
       <tbody>
         {rows.map((row) => (
-          <tr>
+          <tr key={row.id}>
             <td>{row.name}</td>
             <td className={styled.actionsContainer}>
               <button className={styled.button}>
                 <ViewIcon />
               </button>
-              <button className={styled.button}>
-                <EditIcon />
-              </button>
+              <Link to={`${row.id}/edit`}>
+                <button className={styled.button}>
+                  <EditIcon />
+                </button>
+              </Link>
               <button className={styled.button}>
                 <DeleteIcon />
               </button>
