@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 
+import TablePagination from "../../components/ui/Table/TablePagination/TablePagination";
+import Search from "../../components/ui/Search/Search";
 import Button from "../../components/ui/Button/Button";
 
 import PlusIcon from "../../assets/plus-icon.svg";
 import DisabledPlusIcon from "../../assets/disabled-plus-icon.svg";
-import Search from "../../components/ui/Search/Search";
 
 import type { IUser } from "../../types/User";
 
@@ -44,6 +45,8 @@ const Users: React.FC = () => {
           </p>
         </div>
       ) : null}
+
+      <TablePagination currentPage={1} itemsByPage={15} totalItems={250} />
     </div>
   );
 };
