@@ -65,23 +65,23 @@ const FormInput: React.FC<FormInputProps> = ({
   return (
     <div className={styled.container}>
       <div className={styled.inputContainer}>
-        {isFilled && (
-          <label
-            className={`${styled.label} ${errorMessage ? "text-[#ff4b4a]" : "text-[#0290a4]"}`}
-          >
-            {label}
-          </label>
-        )}
-
-        <div className="flex justify-between">
-          <input {...props} className={styled.input} type={inputType} />
-
-          {type === "password" && (
-            <button onClick={(e) => togglePassword(e)}>
-              {showPassword ? <HidePassIcon /> : <ViewPassIcon />}
-            </button>
+        <div className="flex flex-col justify-center w-full">
+          {isFilled && (
+            <label
+              className={`${styled.label} ${errorMessage ? "text-[#ff4b4a]" : "text-[#0290a4]"}`}
+            >
+              {label}
+            </label>
           )}
+
+          <input {...props} className={styled.input} type={inputType} />
         </div>
+
+        {type === "password" && (
+          <button onClick={(e) => togglePassword(e)}>
+            {showPassword ? <HidePassIcon /> : <ViewPassIcon />}
+          </button>
+        )}
       </div>
 
       <div
