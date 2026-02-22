@@ -9,9 +9,9 @@ import Breadcrumb, {
 } from "../../../components/ui/Breadcrumb/Breadcrumb";
 
 import CreateUserForm from "../../../components/CreateUserForm/CreateUserForm";
-import { useEffect } from "react";
+
 import type { ICreateUserData } from "../../../types/User";
-import { createUser } from "../../../services/User";
+import { createUser, findUser } from "../../../services/User";
 
 const CREATE_USER_BREADCRUMB_ITEMS: BreadcrumbItem[] = [
   { label: "Usuários", href: "/users" },
@@ -32,16 +32,13 @@ const CreateUsers: React.FC<CreateUsersProps> = ({ isEditing }) => {
 
   const navigate = useNavigate();
 
+  const userInformation = findUser(parseInt(id ?? "0"));
+
   const BREADCRUMB_ITEMS = isEditing
     ? EDIT_USER_BREADCRUMB_ITEMS
     : CREATE_USER_BREADCRUMB_ITEMS;
-  const PAGE_TITLE = isEditing ? "Editar Usuário" : "Cadastro de Usuário";
 
-  useEffect(() => {
-    if (isEditing) {
-      console.log("id: ", id);
-    }
-  }, [isEditing, id]);
+  const PAGE_TITLE = isEditing ? "Editar Usuário" : "Cadastro de Usuário";
 
   const onSubmit = (data: CreateUserSchema) => {
     if (isEditing) return;
@@ -72,7 +69,11 @@ const CreateUsers: React.FC<CreateUsersProps> = ({ isEditing }) => {
         <h1 className="text-[2.375rem] font-bold">{PAGE_TITLE}</h1>
       </div>
 
-      <CreateUserForm onSubmit={onSubmit} />
+      <CreateUserForm
+        initialValue={userInformation}
+        onSubmit={onSubmit}
+        isEditing={isEditing}
+      />
     </div>
   );
 };

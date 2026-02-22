@@ -11,15 +11,25 @@ import FormButton from "../ui/Form/FormButton/FormButton";
 import FormInput from "../ui/Form/FormInput/FormInput";
 import FormSection from "../ui/Form/FormSection/FormSection";
 
+import type { IUser } from "../../types/User";
+
 interface CreateUserFormProps {
+  initialValue?: IUser;
   onSubmit: (data: CreateUserSchema) => void;
+  isEditing: boolean;
 }
 
-const CreateUserForm: React.FC<CreateUserFormProps> = ({ onSubmit }) => {
-  const { register, handleSubmit, watch, trigger, formState } = useForm({
+const CreateUserForm: React.FC<CreateUserFormProps> = ({
+  initialValue,
+  onSubmit,
+  isEditing,
+}) => {
+  const { register, handleSubmit, watch, trigger, reset, formState } = useForm({
     resolver: zodResolver(createUserSchema),
     mode: "onChange",
   });
+
+  const submitButtonLabel = isEditing ? "Salvar" : "Cadastrar";
 
   const isFormValid = formState.isValid;
 
@@ -34,6 +44,18 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({ onSubmit }) => {
       trigger("repetirSenha");
     }
   }, [senha, trigger]);
+
+  useEffect(() => {
+    if (initialValue) {
+      reset({
+        nome: initialValue.name,
+        email: initialValue.email,
+        matricula: initialValue.matricula,
+        senha: initialValue.senha,
+        repetirSenha: initialValue.senha,
+      });
+    }
+  }, [initialValue, reset]);
 
   return (
     <form
@@ -103,7 +125,7 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({ onSubmit }) => {
           type="submit"
           disabled={isFormValid === false}
         >
-          Cadastrar
+          {submitButtonLabel}
         </FormButton>
       </div>
     </form>

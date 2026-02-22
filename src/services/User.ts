@@ -45,3 +45,11 @@ export const getUsers = (): IUser[] => {
 
   return users;
 };
+
+export const findUser = (id: number) => {
+  const users = getUsers();
+
+  const filteredUser = users.find((user) => user.id === id);
+
+  return filteredUser;
+};
