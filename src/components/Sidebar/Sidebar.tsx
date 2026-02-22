@@ -1,5 +1,7 @@
 import React from "react";
 
+import "./Sidebar.module.css";
+
 import Logo from "../../assets/logo.svg";
 
 import HomeIcon from "../../assets/home-icon.svg";
@@ -16,15 +18,15 @@ import type { ISidebarItem } from "../../types/Sidebar";
 const HOME_ITEM: ISidebarItem = {
   name: "Home",
   path: "/",
-  activeIcon: ActiveHomeIcon,
-  normalIcon: HomeIcon,
+  activeIcon: <ActiveHomeIcon />,
+  normalIcon: <HomeIcon />,
 };
 
 const USERS_ITEM: ISidebarItem = {
   name: "Usuários",
   path: "/users",
-  activeIcon: ActiveUsersIcon,
-  normalIcon: UsersIcon,
+  activeIcon: <ActiveUsersIcon />,
+  normalIcon: <UsersIcon />,
 };
 
 const ACCESS_CONTROL_SUBITEMS: ISidebarItem[] = [USERS_ITEM];
@@ -34,7 +36,7 @@ const Sidebar: React.FC = () => {
     <nav className="flex flex-col justify-between w-84 h-screen bg-[#0D1931] p-4 ">
       <div className="flex flex-col">
         <div className="flex m-6 mb-11">
-          <img src={Logo} alt="Logo" />
+          <Logo />
         </div>
 
         <div className="flex flex-col gap-1.5">
@@ -42,7 +44,7 @@ const Sidebar: React.FC = () => {
 
           <SidebarListItem
             name="Controle de Acesso"
-            icon={AccessControlIcon}
+            icon={<AccessControlIcon />}
             subItems={ACCESS_CONTROL_SUBITEMS}
           />
         </div>

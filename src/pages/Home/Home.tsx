@@ -16,7 +16,7 @@ const Home: React.FC = () => {
 
         <div className="flex flex-col gap-4 mt-20 mb-30">
           <div className="self-center">
-            <img src={Welcome} alt="Welcome Image" />
+            <Welcome />
           </div>
 
           <div className="flex justify-center self-center py-5 border border-[#272846] border-solid rounded-[9px] w-[40%]">

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ReactElement } from "react";
 
 import { useLocation } from "react-router";
 
@@ -11,7 +11,7 @@ import type { ISidebarItem } from "../../types/Sidebar";
 
 interface SidebarListItemProps {
   name: string;
-  icon: string;
+  icon: ReactElement;
   subItems: ISidebarItem[];
 }
 
@@ -33,7 +33,7 @@ const SidebarListItem: React.FC<SidebarListItemProps> = ({
     checkActiveSubItems(subItems, location.pathname),
   );
 
-  const arrowIcon = isExpanded === true ? ArrowDownIcon : ArrowUpIcon;
+  const arrowIcon = isExpanded === true ? <ArrowDownIcon /> : <ArrowUpIcon />;
 
   const handleExpand = () => {
     setIsExpanded(!isExpanded);
@@ -46,11 +46,11 @@ const SidebarListItem: React.FC<SidebarListItemProps> = ({
         onClick={() => handleExpand()}
       >
         <div className="flex gap-2.5">
-          <img src={icon} />
+          {icon}
           <p className="text-white font-medium">{name}</p>
         </div>
 
-        <img src={arrowIcon}></img>
+        {arrowIcon}
       </div>
 
       {isExpanded && (

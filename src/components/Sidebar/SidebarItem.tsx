@@ -21,7 +21,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ item, isSubItem }) => {
       to={path}
       className={`flex items-center gap-2.5 ${isSubItem ? "px-3 py-1.5" : "p-4"} rounded-md ${isSelected ? "bg-[#00AAC1]" : "hover:bg-[#00606D]"}`}
     >
-      <img src={currentIcon} />
+      {currentIcon}
       <p
         className={
           isSelected
