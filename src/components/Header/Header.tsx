@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import ArrowUpMenuIcon from "../../assets/arrow-up-menu-icon.svg";
 import LogoutIcon from "../../assets/logout-icon.svg";
@@ -6,7 +6,7 @@ import LogoutIcon from "../../assets/logout-icon.svg";
 const MenuItem = () => {
   return (
     <div className="flex flex-col gap-5 absolute -bottom-33 right-0 w-72 rounded-md bg-white p-4 shadow-[0px_3px_5px_#15223214]">
-      <div className="bg-white rotate-45 absolute z-2 right-4 -top-2 h-4 w-4 shadow-[0px_3px_5px_#15223214]" />
+      <div className="bg-white rotate-45 absolute z-2 right-4 -top-2 h-4 w-4" />
 
       <div className="flex gap-1.5">
         <div className="self-center flex items-center justify-center bg-[#0B2B25] h-10 w-10 rounded-[100%]">
@@ -34,9 +34,24 @@ const MenuItem = () => {
 const MenuIcon = () => {
   const [showMenuItem, setShowMenuItem] = useState<boolean>(false);
 
+  const hideMenuItem = () => {
+    setShowMenuItem(false);
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", hideMenuItem);
+
+    return () => {
+      document.removeEventListener("click", hideMenuItem);
+    };
+  });
+
   return (
     <div
-      onClick={() => setShowMenuItem(!showMenuItem)}
+      onClick={(e) => {
+        e.stopPropagation();
+        setShowMenuItem(!showMenuItem);
+      }}
       className="flex items-center justify-center relative rounded-[100%] bg-[#0B2B25] h-14 w-14 border-3 border-solid border-[#17876D] cursor-pointer"
     >
       <span className="text-white text-xl select-none">MS</span>
