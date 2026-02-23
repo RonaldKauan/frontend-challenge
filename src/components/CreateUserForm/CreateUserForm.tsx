@@ -17,12 +17,14 @@ interface CreateUserFormProps {
   initialValue?: IUser;
   onSubmit: (data: CreateUserSchema) => void;
   isEditing: boolean;
+  handleCancel: () => void;
 }
 
 const CreateUserForm: React.FC<CreateUserFormProps> = ({
   initialValue,
   onSubmit,
   isEditing,
+  handleCancel,
 }) => {
   const { register, handleSubmit, watch, trigger, reset, formState } = useForm({
     resolver: zodResolver(createUserSchema),
@@ -118,7 +120,15 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({
         </div>
       </div>
       <div className="flex justify-end gap-2.5 mt-20">
-        <FormButton mode="secondary">Cancelar</FormButton>
+        <FormButton
+          mode="secondary"
+          onClick={(e) => {
+            e.preventDefault();
+            handleCancel();
+          }}
+        >
+          Cancelar
+        </FormButton>
 
         <FormButton
           mode="primary"
