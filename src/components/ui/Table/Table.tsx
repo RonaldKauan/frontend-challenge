@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import type { IUser } from "../../../types/User";
 
 import { Link } from "react-router";
@@ -5,8 +7,14 @@ import { Link } from "react-router";
 import styled from "./Table.module.css";
 
 import ViewIcon from "../../../assets/view-icon.svg";
+import ViewHoverIcon from "../../../assets/view-hover-icon.svg";
+
 import EditIcon from "../../../assets/edit-icon.svg";
+import EditHoverIcon from "../../../assets/edit-hover-icon.svg";
+
 import DeleteIcon from "../../../assets/delete-icon.svg";
+import DeleteHoverIcon from "../../../assets/delete-hover-icon.svg";
+
 import SearchNotFoundIcon from "../../../assets/search-not-found-icon.svg";
 
 interface TableColumn {
@@ -29,6 +37,10 @@ const Table: React.FC<TableProps> = ({
 }) => {
   const showSearchNotFound = searchValue.length > 0 && rows.length === 0;
 
+  const [isViewHover, setIsViewHover] = useState<boolean>(false);
+  const [isEditHover, setIsEditHover] = useState<boolean>(false);
+  const [isDeleteHover, setisDeleteHover] = useState<boolean>(false);
+
   return (
     <div className="h-full">
       <table className={styled.table}>
@@ -48,19 +60,29 @@ const Table: React.FC<TableProps> = ({
               <tr key={row.id}>
                 <td>{row.name}</td>
                 <td className={styled.actionsContainer}>
-                  <button className={styled.button}>
-                    <ViewIcon />
+                  <button
+                    onMouseEnter={() => setIsViewHover(true)}
+                    onMouseLeave={() => setIsViewHover(false)}
+                    className={styled.button}
+                  >
+                    {isViewHover ? <ViewHoverIcon /> : <ViewIcon />}
                   </button>
                   <Link to={`${row.id}/edit`}>
-                    <button className={styled.button}>
-                      <EditIcon />
+                    <button
+                      onMouseEnter={() => setIsEditHover(true)}
+                      onMouseLeave={() => setIsEditHover(false)}
+                      className={styled.button}
+                    >
+                      {isEditHover ? <EditHoverIcon /> : <EditIcon />}
                     </button>
                   </Link>
                   <button
                     className={styled.button}
+                    onMouseEnter={() => setisDeleteHover(true)}
+                    onMouseLeave={() => setisDeleteHover(false)}
                     onClick={() => handleDeleteUser(row.id)}
                   >
-                    <DeleteIcon />
+                    {isDeleteHover ? <DeleteHoverIcon /> : <DeleteIcon />}
                   </button>
                 </td>
               </tr>
