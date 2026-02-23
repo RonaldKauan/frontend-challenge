@@ -13,6 +13,8 @@ interface SidebarListItemProps {
   name: string;
   icon: ReactElement;
   subItems: ISidebarItem[];
+  isCollapsed: boolean;
+  openSidebar: () => void;
 }
 
 const checkActiveSubItems = (
@@ -26,6 +28,8 @@ const SidebarListItem: React.FC<SidebarListItemProps> = ({
   name,
   icon,
   subItems,
+  isCollapsed,
+  openSidebar,
 }) => {
   const location = useLocation();
 
@@ -39,7 +43,14 @@ const SidebarListItem: React.FC<SidebarListItemProps> = ({
     setIsExpanded(!isExpanded);
   };
 
-  return (
+  return isCollapsed === true ? (
+    <div
+      className="flex p-4 cursor-pointer hover:bg-[#00606D] rounded-md"
+      onClick={() => openSidebar()}
+    >
+      {icon}
+    </div>
+  ) : (
     <div className="flex flex-col gap-1.5">
       <div
         className="flex p-4 justify-between hover:bg-[#00606D] rounded-md"
