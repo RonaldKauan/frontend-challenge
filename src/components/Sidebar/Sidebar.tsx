@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 
-import "./Sidebar.module.css";
-
 import Logo from "../../assets/logo.svg";
 import LogoMinimalist from "../../assets/logo-minimalist.svg";
 import LeftArrow from "../../assets/left-arrow-icon.svg";

@@ -36,20 +36,19 @@ src
 ├── schemas # Esquemas de validação de formulários
 ├── services # Chamadas para APIs (*)
 ├── types # Interfaces e tipos globais
-
-* Nesse projeto eu usei o localStorage para armazenar os dados para simular o funcionamento do backend.
 ```
+
+(\*) Nesse projeto eu usei o localStorage para armazenar os dados para simular o funcionamento do backend.
 
 ## Tecnologias Utilizadas
 
-```
 - React
 - Vite
 - TypeScript
 - React Router
 - Context API
 - TailwindCSS
+- CSS Module
 - React Hook Form
 - Zod
 - React Toastify
-```
