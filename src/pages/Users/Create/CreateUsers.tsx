@@ -15,6 +15,8 @@ import { createUser, editUser, findUser } from "../../../services/User";
 
 import useModal from "../../../hooks/useModal";
 
+import { Bounce, toast } from "react-toastify";
+
 const CREATE_USER_BREADCRUMB_ITEMS: BreadcrumbItem[] = [
   { label: "Usuários", href: "/users" },
   { label: "Cadastro de Usuário" },
@@ -58,10 +60,18 @@ const CreateUsers: React.FC<CreateUsersProps> = ({ isEditing }) => {
 
     if (isEditing) {
       editUser(intId, createUserData, () => {
+        toast.success("Usuário Atualizado!", {
+          theme: "colored",
+        });
+
         navigate("/users");
       });
     } else {
       createUser(createUserData, () => {
+        toast.success("Dados salvos com sucesso!", {
+          theme: "colored",
+        });
+
         navigate("/users");
       });
     }
@@ -75,6 +85,10 @@ const CreateUsers: React.FC<CreateUsersProps> = ({ isEditing }) => {
       secondaryButtonText: "Não",
       primaryButtonAction: () => {
         closeModal();
+
+        toast.warning("Cadastro cancelado", {
+          transition: Bounce,
+        });
 
         setTimeout(() => {
           navigate("/users");

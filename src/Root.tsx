@@ -7,6 +7,8 @@ import Header from "./components/Header/Header";
 
 import { Outlet } from "react-router";
 
+import { Bounce, ToastContainer } from "react-toastify";
+
 const Root: React.FC = () => {
   return (
     <div className="flex h-screen w-screen">
@@ -21,6 +23,13 @@ const Root: React.FC = () => {
       </div>
 
       <ModalComponent />
+
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        transition={Bounce}
+        pauseOnHover={false}
+      />
     </div>
   );
 };
