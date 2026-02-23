@@ -13,18 +13,15 @@ import DisabledPlusIcon from "../../assets/disabled-plus-icon.svg";
 import { deleteUser, getUsers } from "../../services/User";
 
 import type { IUser } from "../../types/User";
-import DeleteUserModal from "../../components/DeleteUserModal/DeleteUserModal";
+
+import useModal from "../../hooks/useModal";
 
 const Users: React.FC = () => {
   const [users, setUsers] = useState<IUser[]>(getUsers());
 
   const [search, setSearch] = useState<string>("");
 
-  const [userDeleteModal, setUserDeleteModal] = useState({
-    isOpen: false,
-    primaryAction: () => {},
-    secondaryAction: () => {},
-  });
+  const { openModal, closeModal } = useModal();
 
   const showTable = users.length > 0;
 
@@ -34,24 +31,19 @@ const Users: React.FC = () => {
     setSearch(newValue);
   };
 
-  const handleCloseDeleteModal = () => {
-    setUserDeleteModal({
-      isOpen: false,
-      primaryAction: () => {},
-      secondaryAction: () => {},
-    });
-  };
-
   const handleDeleteUser = (userId: number) => {
-    setUserDeleteModal({
-      isOpen: true,
-      primaryAction: () => {
+    openModal({
+      title: "Deseja excluir?",
+      message: "O usuário será excluído.",
+      primaryButtonText: "Sim",
+      secondaryButtonText: "Não",
+      primaryButtonAction: () => {
         deleteUser(userId);
         setUsers(getUsers());
-        handleCloseDeleteModal();
+        closeModal();
       },
-      secondaryAction: () => {
-        handleCloseDeleteModal();
+      secondaryButtonAction: () => {
+        closeModal();
       },
     });
   };
@@ -70,8 +62,6 @@ const Users: React.FC = () => {
           </Button>
         </Link>
       </div>
-
-      {showTable}
 
       {showTable === true ? (
         <div className="h-[70%] w-full">
@@ -96,8 +86,6 @@ const Users: React.FC = () => {
       )}
 
       <TablePagination currentPage={1} itemsByPage={15} totalItems={250} />
-
-      <DeleteUserModal {...userDeleteModal} />
     </div>
   );
 };

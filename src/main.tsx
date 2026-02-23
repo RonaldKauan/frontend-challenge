@@ -9,6 +9,8 @@ import Home from "./pages/Home/Home";
 import Users from "./pages/Users/Users";
 import CreateUsers from "./pages/Users/Create/CreateUsers";
 
+import { ModalProvider } from "./providers/ModalProvider";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -29,6 +31,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <ModalProvider>
+      <RouterProvider router={router} />
+    </ModalProvider>
   </StrictMode>,
 );
