@@ -17,7 +17,9 @@ import type { IUser } from "../../types/User";
 import useModal from "../../hooks/useModal";
 
 const Users: React.FC = () => {
-  const [users, setUsers] = useState<IUser[]>(getUsers());
+  const allUsers = () => getUsers();
+
+  const [users, setUsers] = useState<IUser[]>(allUsers());
 
   const [search, setSearch] = useState<string>("");
 
@@ -29,6 +31,12 @@ const Users: React.FC = () => {
 
   const handleSearch = (newValue: string) => {
     setSearch(newValue);
+
+    const filteredUsers = allUsers().filter((user) =>
+      user.name.toLowerCase().includes(newValue.toLowerCase()),
+    );
+
+    setUsers(newValue.length === 0 ? allUsers : filteredUsers);
   };
 
   const handleDeleteUser = (userId: number) => {
@@ -39,7 +47,7 @@ const Users: React.FC = () => {
       secondaryButtonText: "Não",
       primaryButtonAction: () => {
         deleteUser(userId);
-        setUsers(getUsers());
+        setUsers(allUsers);
         closeModal();
       },
       secondaryButtonAction: () => {
