@@ -11,7 +11,7 @@ import Breadcrumb, {
 import CreateUserForm from "../../../components/CreateUserForm/CreateUserForm";
 
 import type { ICreateUserData } from "../../../types/User";
-import { createUser, findUser } from "../../../services/User";
+import { createUser, editUser, findUser } from "../../../services/User";
 
 import useModal from "../../../hooks/useModal";
 
@@ -32,11 +32,13 @@ interface CreateUsersProps {
 const CreateUsers: React.FC<CreateUsersProps> = ({ isEditing }) => {
   const { id } = useParams();
 
+  const intId = parseInt(id ?? "0");
+
   const navigate = useNavigate();
 
   const { openModal, closeModal } = useModal();
 
-  const userInformation = findUser(parseInt(id ?? "0"));
+  const userInformation = findUser(intId);
 
   const BREADCRUMB_ITEMS = isEditing
     ? EDIT_USER_BREADCRUMB_ITEMS
@@ -45,8 +47,6 @@ const CreateUsers: React.FC<CreateUsersProps> = ({ isEditing }) => {
   const PAGE_TITLE = isEditing ? "Editar Usuário" : "Cadastro de Usuário";
 
   const onSubmit = (data: CreateUserSchema) => {
-    if (isEditing) return;
-
     console.log(data);
 
     const createUserData: ICreateUserData = {
@@ -56,9 +56,15 @@ const CreateUsers: React.FC<CreateUsersProps> = ({ isEditing }) => {
       senha: data.senha,
     };
 
-    createUser(createUserData, () => {
-      navigate("/users");
-    });
+    if (isEditing) {
+      editUser(intId, createUserData, () => {
+        navigate("/users");
+      });
+    } else {
+      createUser(createUserData, () => {
+        navigate("/users");
+      });
+    }
   };
 
   const handleCancel = () => {

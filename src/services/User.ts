@@ -61,3 +61,19 @@ export const deleteUser = (id: number) => {
 
   localStorage.setItem("users", JSON.stringify(filteredUser));
 };
+
+export const editUser = (
+  id: number,
+  data: ICreateUserData,
+  callback: () => void,
+) => {
+  const users = getUsers();
+
+  const newUsers = users.map((user) =>
+    user.id === id ? { id, ...data } : user,
+  );
+
+  localStorage.setItem("users", JSON.stringify(newUsers));
+
+  callback();
+};
