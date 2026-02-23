@@ -77,27 +77,37 @@ const CreateUsers: React.FC<CreateUsersProps> = ({ isEditing }) => {
     }
   };
 
-  const handleCancel = () => {
-    openModal({
-      title: "Deseja cancelar?",
-      message: "Os dados inseridos não serão salvos",
-      primaryButtonText: "Sim",
-      secondaryButtonText: "Não",
-      primaryButtonAction: () => {
-        closeModal();
+  const handleCancel = (isDirty: boolean) => {
+    if (isDirty) {
+      openModal({
+        title: "Deseja cancelar?",
+        message: "Os dados inseridos não serão salvos",
+        primaryButtonText: "Sim",
+        secondaryButtonText: "Não",
+        primaryButtonAction: () => {
+          closeModal();
 
-        toast.warning("Cadastro cancelado", {
-          transition: Bounce,
-        });
+          toast.warning("Cadastro cancelado", {
+            transition: Bounce,
+          });
 
-        setTimeout(() => {
-          navigate("/users");
-        }, 500);
-      },
-      secondaryButtonAction: () => {
-        closeModal();
-      },
-    });
+          setTimeout(() => {
+            navigate("/users");
+          }, 500);
+        },
+        secondaryButtonAction: () => {
+          closeModal();
+        },
+      });
+    } else {
+      setTimeout(() => {
+        navigate("/users");
+      }, 500);
+
+      toast.warning("Cadastro cancelado", {
+        transition: Bounce,
+      });
+    }
   };
 
   return (

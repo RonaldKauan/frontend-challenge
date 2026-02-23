@@ -17,7 +17,7 @@ interface CreateUserFormProps {
   initialValue?: IUser;
   onSubmit: (data: CreateUserSchema) => void;
   isEditing: boolean;
-  handleCancel: () => void;
+  handleCancel: (isDirty: boolean) => void;
 }
 
 const CreateUserForm: React.FC<CreateUserFormProps> = ({
@@ -26,14 +26,25 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({
   isEditing,
   handleCancel,
 }) => {
-  const { register, handleSubmit, watch, trigger, reset, formState } = useForm({
+  const {
+    register,
+    handleSubmit,
+    watch,
+    trigger,
+    formState: { isDirty, isValid, errors },
+  } = useForm({
     resolver: zodResolver(createUserSchema),
     mode: "onChange",
+    defaultValues: {
+      nome: initialValue?.name ?? "",
+      matricula: initialValue?.matricula ?? "",
+      email: initialValue?.email ?? "",
+      senha: initialValue?.senha ?? "",
+      repetirSenha: initialValue?.senha ?? "",
+    },
   });
 
   const submitButtonLabel = isEditing ? "Salvar" : "Cadastrar";
-
-  const isFormValid = formState.isValid;
 
   const nome = watch("nome");
   const matricula = watch("matricula");
@@ -47,18 +58,6 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({
     }
   }, [senha, trigger]);
 
-  useEffect(() => {
-    if (initialValue) {
-      reset({
-        nome: initialValue.name,
-        email: initialValue.email,
-        matricula: initialValue.matricula,
-        senha: initialValue.senha,
-        repetirSenha: initialValue.senha,
-      });
-    }
-  }, [initialValue, reset]);
-
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -71,7 +70,7 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({
           <FormInput
             placeholder="Insira o nome completo*"
             label="Nome Completo"
-            errorMessage={formState.errors?.nome?.message ?? ""}
+            errorMessage={errors?.nome?.message ?? ""}
             helperText="Máx. 30 Caracteres"
             currentValue={nome}
             {...register("nome")}
@@ -80,7 +79,7 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({
           <FormInput
             placeholder="Insira o Nº da matrícula"
             label="Matrícula"
-            errorMessage={formState.errors?.matricula?.message ?? ""}
+            errorMessage={errors?.matricula?.message ?? ""}
             helperText="Mín. 4 Dígitos | • Máx. 10 Dígitos"
             currentValue={matricula}
             {...register("matricula")}
@@ -89,7 +88,7 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({
           <FormInput
             placeholder="Insira o E-mail*"
             label="E-mail"
-            errorMessage={formState.errors?.email?.message ?? ""}
+            errorMessage={errors?.email?.message ?? ""}
             helperText="Máx. 40 Caracteres"
             currentValue={email}
             {...register("email")}
@@ -103,7 +102,7 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({
           <FormInput
             placeholder="Senha"
             label="Senha"
-            errorMessage={formState.errors?.senha?.message ?? ""}
+            errorMessage={errors?.senha?.message ?? ""}
             currentValue={senha}
             type="password"
             {...register("senha")}
@@ -112,7 +111,7 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({
           <FormInput
             placeholder="Repetir Senha"
             label="Repetir Senha"
-            errorMessage={formState.errors?.repetirSenha?.message ?? ""}
+            errorMessage={errors?.repetirSenha?.message ?? ""}
             currentValue={repetirSenha}
             type="password"
             {...register("repetirSenha")}
@@ -124,17 +123,13 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({
           mode="secondary"
           onClick={(e) => {
             e.preventDefault();
-            handleCancel();
+            handleCancel(isDirty);
           }}
         >
           Cancelar
         </FormButton>
 
-        <FormButton
-          mode="primary"
-          type="submit"
-          disabled={isFormValid === false}
-        >
+        <FormButton mode="primary" type="submit" disabled={isValid === false}>
           {submitButtonLabel}
         </FormButton>
       </div>
