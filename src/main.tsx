@@ -8,6 +8,7 @@ import Root from "./Root";
 import Home from "./pages/Home/Home";
 import Users from "./pages/Users/Users";
 import CreateUsers from "./pages/Users/Create/CreateUsers";
+import NotFound from "./pages/NotFound/NotFound";
 
 import { ModalProvider } from "./providers/ModalProvider";
 
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
           { path: "create", element: <CreateUsers isEditing={false} /> },
           { path: ":id/edit", element: <CreateUsers isEditing={true} /> },
         ],
+      },
+      {
+        path: "*",
+        Component: NotFound,
       },
     ],
   },
