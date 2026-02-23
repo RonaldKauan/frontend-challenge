@@ -17,22 +17,22 @@ import type { IUser } from "../../types/User";
 import useModal from "../../hooks/useModal";
 
 const Users: React.FC = () => {
-  const allUsers = () => getUsers();
+  const allUsers = getUsers();
 
-  const [users, setUsers] = useState<IUser[]>(allUsers());
+  const [users, setUsers] = useState<IUser[]>(allUsers);
 
   const [search, setSearch] = useState<string>("");
 
   const { openModal, closeModal } = useModal();
 
-  const showTable = users.length > 0;
+  const showNoUsers = users.length === 0 && search.length === 0;
 
   const disabledButton = false;
 
   const handleSearch = (newValue: string) => {
     setSearch(newValue);
 
-    const filteredUsers = allUsers().filter((user) =>
+    const filteredUsers = allUsers.filter((user) =>
       user.name.toLowerCase().includes(newValue.toLowerCase()),
     );
 
@@ -47,7 +47,7 @@ const Users: React.FC = () => {
       secondaryButtonText: "Não",
       primaryButtonAction: () => {
         deleteUser(userId);
-        setUsers(allUsers);
+        setUsers(getUsers());
         closeModal();
       },
       secondaryButtonAction: () => {
@@ -71,7 +71,7 @@ const Users: React.FC = () => {
         </Link>
       </div>
 
-      {showTable === true ? (
+      {showNoUsers === false ? (
         <div className="h-[70%] w-full">
           <Table
             columns={[
@@ -79,6 +79,7 @@ const Users: React.FC = () => {
               { name: "Ações", width: "15%" },
             ]}
             rows={users}
+            searchValue={search}
             handleDeleteUser={handleDeleteUser}
           />
         </div>
@@ -93,7 +94,11 @@ const Users: React.FC = () => {
         </div>
       )}
 
-      <TablePagination currentPage={1} itemsByPage={15} totalItems={250} />
+      <TablePagination
+        currentPage={1}
+        itemsByPage={15}
+        totalItems={allUsers.length}
+      />
     </div>
   );
 };
